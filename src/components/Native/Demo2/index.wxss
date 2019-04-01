@@ -1,0 +1,11 @@
+.mjgf-backTop-container{position:fixed;right:24rpx;bottom:65rpx;z-index:100;display:flex;width:90rpx;height:90rpx;border-radius:45rpx;background-color:#fff;box-shadow:0 0 3px 2px rgba(0,0,0,.03);justify-content:center;flex-direction:column;align-items:center}
+.mjgf-backTop-label{position:relative;top:-4rpx;color:#c3c3c3;font-size:24rpx}
+.mjgf-backTop-icon{width:36rpx;height:36rpx}
+@keyframes slideUp{0%{transform:translate3d(0,200%,0)}
+to{transform:translate3d(0,0,0)}
+}
+.slide-up{animation:slideUp ease .3s forwards}
+@keyframes slideDown{0%{transform:translate3d(0,0,0)}
+to{transform:translate3d(0,200%,0)}
+}
+.slide-down{animation:slideDown ease .3s forwards}

@@ -1,0 +1,18 @@
+@import "../../styles/mixin";
+
+.request-page {
+  @include wh(100%, 100%);
+  box-sizing: border-box;
+}
+.pic{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+.item{
+  margin-bottom: 50px;
+}
+.name{
+  font-size: 28px;
+}

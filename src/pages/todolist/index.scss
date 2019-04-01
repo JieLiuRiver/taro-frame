@@ -1,0 +1,21 @@
+@import "../../styles/mixin";
+
+.todolist-page {
+  @include wh(100%, 100%);
+  box-sizing: border-box;
+  padding: 30px;
+}
+.form-input{
+  border-bottom: 1px solid #f2f2f2;
+  flex: 1;
+  padding: 20px 0;
+}
+.top-box{
+  padding: 20px;
+  box-sizing: border-box;
+}
+.add-btn{
+  color: blue;
+  flex: 0 0 100px;
+  text-algin: center;
+}

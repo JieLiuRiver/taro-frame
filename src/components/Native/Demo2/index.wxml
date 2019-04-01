@@ -1,0 +1,4 @@
+<view class="mjgf-backTop-container com-shaow custom-class" catchtap="_backToTop">
+    <image class="mjgf-backTop-icon" src="{{icon_arrow_top}}"></image>
+    <text class="mjgf-backTop-label">顶部</text>
+</view>

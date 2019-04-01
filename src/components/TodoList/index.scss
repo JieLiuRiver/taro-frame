@@ -1,0 +1,38 @@
+@import '../../styles/base';
+
+.doinglist-box{
+  margin-top: 80px;
+}
+.title-text{
+  font-weight: 700;
+  font-size: 40px;
+}
+.title-box{
+  width: 100%;
+  margin-bottom: 20px;
+}
+.del-btn-wrap{
+  flex: 0 0 100px;
+}
+.del-btn{
+  font-size: 24px;
+  color: red;
+}
+.item{
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+.item-label{
+  font-size: 28px;
+}
+.doing-item{
+  background-color: #333;
+  color: #fff;
+}
+.item-left{
+  flex: 1;
+  padding: 20px;
+}

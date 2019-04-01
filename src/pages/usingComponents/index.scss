@@ -1,0 +1,7 @@
+@import "../../styles/mixin";
+
+.usingComponents-page {
+  @include wh(100%, 100%);
+  box-sizing: border-box;
+  padding: 30px;
+}

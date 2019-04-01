@@ -1,0 +1,13 @@
+@import "../../styles/mixin";
+
+.route-page {
+  @include wh(100%, 100%);
+  box-sizing: border-box;
+  padding: 50px;
+  .way-wrap{
+    margin-bottom: 30px;
+    text{
+      color: blue;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+	"miniprogramRoot": "dist/",
+	"projectname": "taro-frame",
+	"description": "",
+	"appid": "wx3a64f83d3b7e9fff",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"condition": {}
+}
