@@ -4,6 +4,7 @@ import Index from './pages/index';
 import dva from './utils/dva';
 import models from './models';
 import { Provider } from '@tarojs/redux';
+import Towxml from 'towxml';
 
 import './styles/base.scss';
 
@@ -21,6 +22,7 @@ class App extends Component {
       'pages/todolist/index',
       'pages/usingComponents/index',
       'pages/route/index',
+      'pages/jsx/index'
     ],
     window: {
       backgroundTextStyle: 'dark',
@@ -31,7 +33,9 @@ class App extends Component {
     debug: true
   };
 
-  componentDidMount() {}
+  componentDidMount() {
+
+  }
 
   render() {
     return (

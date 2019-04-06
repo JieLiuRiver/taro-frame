@@ -29,7 +29,6 @@ class Index extends Component {
     const {demolist} = this.props
     return (
       <View className='index-container'>
-
         <View className='title-box flex-row-center'>
           <Text className='title'>Taro + Dva</Text>
         </View>

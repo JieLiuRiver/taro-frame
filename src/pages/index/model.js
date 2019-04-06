@@ -19,6 +19,10 @@ export default {
       {
         name: '路由Api',
         url: '/pages/route/index'
+      },
+      {
+        name: 'JSX语法支持程度',
+        url: '/pages/jsx/index'
       }
     ]
   },

@@ -2,10 +2,12 @@ import common from './common';
 import Index from '../pages/index/model'
 import Todolist from '../pages/todolist/model'
 import Request from '../pages/request/model'
+import Jsx from '../pages/jsx/model'
 
 export default [
   common,
   Index,
   Todolist,
-  Request
+  Request,
+  Jsx
 ];

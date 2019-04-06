@@ -1,0 +1,10 @@
+@import "../../styles/mixin";
+
+.jsx-page {
+  @include wh(100%, 100%);
+  box-sizing: border-box;
+  padding: 30rpx;
+}
+.word-text{
+  font-size: 28rpx;
+}
