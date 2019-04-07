@@ -21,8 +21,20 @@ export default {
         url: '/pages/route/index'
       },
       {
-        name: 'JSX语法支持程度',
-        url: '/pages/jsx/index'
+        name: '组件样式',
+        url: '/pages/comstyle/index'
+      },
+      {
+        name: 'cssModules',
+        url: '/pages/cssModules/index'
+      },
+      {
+        name: '事件处理',
+        url: '/pages/event/index'
+      },
+      {
+        name: '消息机制',
+        url: '/pages/events/index'
       }
     ]
   },

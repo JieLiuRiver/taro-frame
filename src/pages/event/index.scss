@@ -1,0 +1,18 @@
+@import "../../styles/mixin";
+
+.event-page {
+  @include wh(100%, 100%);
+  box-sizing: border-box;
+}
+
+.a{
+  width: 400px;
+  height: 200px;
+  background-color: orange;
+  border-radius: 10px;
+  margin-top: 100px;
+}
+.b{
+  background-color: blue;
+  color: #fff;
+}

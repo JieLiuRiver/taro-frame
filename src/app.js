@@ -4,7 +4,6 @@ import Index from './pages/index';
 import dva from './utils/dva';
 import models from './models';
 import { Provider } from '@tarojs/redux';
-import Towxml from 'towxml';
 
 import './styles/base.scss';
 
@@ -17,24 +16,29 @@ const store = dvaApp.getStore();
 class App extends Component {
   config = {
     pages: [
+      'pages/events/index',
+      'pages/event/index',
+      'pages/cssModules/index',
+      'pages/comstyle/index',
       'pages/index/index',
       'pages/request/index',
       'pages/todolist/index',
       'pages/usingComponents/index',
       'pages/route/index',
-      'pages/jsx/index'
     ],
     window: {
       backgroundTextStyle: 'dark',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: '美肌工坊',
+      navigationBarTitleText: 'Taro',
       navigationBarTextStyle: 'black',
     },
     debug: true
   };
 
   componentDidMount() {
-
+    Taro.eventCenter.on('overflow', args => {
+      console.log('eventCenter', args)
+    })
   }
 
   render() {

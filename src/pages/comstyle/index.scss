@@ -1,0 +1,21 @@
+@import "../../styles/mixin";
+
+.comstyle-page {
+  @include wh(100%, 100%);
+  box-sizing: border-box;
+  padding: 50rpx;
+}
+
+.test1{
+  color: red;
+}
+
+.test3{
+  background-color: red;
+  color: #fff;
+  padding: 30rpx;
+  -webkit-border-radius: 10rpx;
+  -moz-border-radius: 10rpx;
+  border-radius: 10rpx;
+  margin-top: 100rpx;
+}

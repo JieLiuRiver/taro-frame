@@ -11,7 +11,7 @@ const interceptor = (chain) => {
   return chain.proceed(requestParams)
 }
 
-export default (options = { method: 'GET', data: {} }) => {
+export default (options = { method: 'GET', data: {}, header: null }) => {
   if (!noConsole) {
     console.log(
       `${new Date().toLocaleString()}【 M=${options.url} 】P=${JSON.stringify(
@@ -19,17 +19,18 @@ export default (options = { method: 'GET', data: {} }) => {
       )}`
     );
   }
-  const _header = {
+  let _header = {
     'Content-Type': 'application/json',
   }
   Taro.getStorageSync(token) && (_header['Authentication'] = Taro.getStorageSync(token))
+  !!options.header && (_header = Object.assign(options.header, _header))
 
   // 自 1.2.16 开始支持拦截器
   console.log('Taro.addInterceptor', Taro.addInterceptor)
   Taro.addInterceptor && Taro.addInterceptor(interceptor)
 
   return Taro.request({
-    url: baseUrl + options.url,
+    url: options.url.indexOf('https') == -1 ? baseUrl + options.url : options.url,
     data: {
       ...request_data,
       ...options.data,

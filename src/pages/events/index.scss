@@ -1,0 +1,13 @@
+@import "../../styles/mixin";
+
+.events-page {
+  @include wh(100%, 100%);
+  box-sizing: border-box;
+  padding: 30px;
+}
+.add{
+  padding: 10px;
+  background-color: orange;
+  border-radius: 5px;
+  margin: 30px 0;
+}

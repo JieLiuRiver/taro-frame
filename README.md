@@ -186,3 +186,517 @@ onTabItemTap({index, pagePath, text}){
   */
 }
 ```
+
+
+##  JSX支持程度
+
+#### 1. 不能在自定义组件中写 children (taro/custom-component-children)
+
+在 Nerv/React 中，自定义组件嵌套实际上也是通过 props 来实现的，只是 `children` 是一个特殊的 prop 。而对于 Taro，文档已阐述过不能通过 props 来传递 JSX 元素。
+
+更多详情请查看文档 [JSX 简介](https://nervjs.github.io/taro/jsx.html)。
+
+
+#### 规则详情
+
+以下代码会被 ESLint 提示警告，同时在 Taro（小程序端）也不会有效：
+
+```javascript
+<CustomComponent>test</CustomComponent>
+
+<CustomComponent>{'test'}</CustomComponent>
+
+<CustomComponent>
+  <Other />
+</CustomComponent>
+
+<Typo>{}</Typo>
+```
+
+以下代码不会被警告，也应当在 Taro 任意端中能够运行：
+
+```javascript
+<CustomComponent />
+
+<CustomComponent> </CustomComponent>
+
+<ScrollView>test</ScrollView>
+
+<View>test</View>
+
+<View>
+  <CustomComponent />
+</View>
+```
+
+#### 解决方案
+
+请查看文档 [JSX 简介](https://nervjs.github.io/taro/jsx.html)。
+
+该特性可能会在下一个 Major 版本的 Taro 中得到支持。
+
+
+#### 2. 不能在包含 JSX 元素的 map 循环中使用 if 表达式(taro/if-statement-in-map-loop)
+
+#### 规则详情
+
+以下代码会被 ESLint 提示警告，同时在 Taro（小程序端）也不会有效：
+
+```javascript
+numbers.map((number) => {
+  let element = null
+  const isOdd = number % 2
+  if (isOdd) {
+    element = <Custom />
+  }
+  return element
+})
+```
+
+以下代码不会被警告，也应当在 Taro 任意端中能够运行：
+
+```javascript
+numbers.map((number) => {
+  let isOdd = false
+  if (number % 2) {
+    isOdd = true
+  }
+  return isOdd && <Custom />
+})
+```
+
+#### 解决方案
+
+尽量在 map 循环中使用条件表达式或逻辑表达式。
+
+```javascript
+numbers.map((number) => {
+  const isOdd = number % 2
+  return isOdd ? <Custom /> : null
+})
+
+numbers.map((number) => {
+  const isOdd = number % 2
+  return isOdd && <Custom />
+})
+```
+
+当测试用例和线上项目都检测通过时，Taro 将很快（下一个 Minor 版本）支持这一特性。
+
+####  3. 不能使用 Array#map 之外的方法操作 JSX 数组 (taro/manipulate-jsx-as-array)
+
+Taro 在小程序端实际上把 JSX 转换成了字符串模板，而一个原生 JSX 表达式实际上是一个 React/Nerv 元素(react-element)的构造器，因此在原生 JSX 中你可以随意地一组 React 元素进行操作。但在 Taro 中你只能使用 `map` 方法，Taro 转换成小程序中 `wx:for`。
+
+#### 规则详情
+
+以下代码会被 ESLint 提示警告，同时在 Taro（小程序端）也不会有效：
+
+```javascript
+test.push(<View />)
+
+numbers.forEach(numbers => {
+  if (someCase) {
+    a = <View />
+  }
+})
+
+test.shift(<View />)
+
+components.find(component => {
+  return component === <View />
+})
+
+components.some(component => component.constructor.__proto__ === <View />.constructor)
+```
+
+以下代码不会被警告，也应当在 Taro 任意端中能够运行：
+
+```javascript
+numbers.filter(Boolean).map((number) => {
+  const element = <View />
+  return <View />
+})
+```
+
+#### 解决方案
+
+先处理好需要遍历的数组，然后再用处理好的数组调用 `map` 方法。
+
+```javascript
+numbers.filter(isOdd).map((number) => <View />)
+
+for (let index = 0; index < array.length; index++) {
+  // do you thing with array
+}
+
+const element = array.map(item => {
+  return <View />
+})
+```
+
+除非微信小程序开放更多能力，目前看不到能支持该特性的任何可能性。
+
+
+
+#### 4. 不能在 JSX 参数中使用匿名函数(taro/no-anonymous-function-in-props)
+
+详情请看文档 [事件处理](https://nervjs.github.io/taro/event.html)。
+
+#### 规则详情
+
+以下代码会被 ESLint 提示警告，同时在 Taro（小程序端）也不会有效：
+
+```javascript
+<View onClick={() => this.handleClick()} />
+
+<View onClick={(e) => this.handleClick(e)} />
+
+<View onClick={() => ({})} />
+
+<View onClick={function () {}} />
+
+<View onClick={function (e) {this.handleClick(e)}} />
+```
+
+以下代码不会被警告，也应当在 Taro 任意端中能够运行：
+
+```javascript
+<View onClick={this.hanldeClick} />
+
+<View onClick={this.props.hanldeClick} />
+
+<View onClick={this.hanldeClick.bind(this)} />
+
+<View onClick={this.props.hanldeClick.bind(this)} />
+```
+
+#### 解决方案
+
+使用 [`bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind) 或 [类参数](https://babeljs.io/docs/plugins/transform-class-properties/)绑定函数。
+
+```javascript
+<View onClick={this.props.hanldeClick.bind(this)} />
+```
+
+当测试用例和线上项目都检测通过时，Taro 将很快（下一个 Minor 版本）支持这一特性。
+
+
+####  5. 暂不支持在 render() 之外的方法定义 JSX
+
+由于微信小程序的 `template` 不能动态传值和传入函数，Taro 暂时也没办法支持在类方法中定义 JSX。
+
+
+#### 规则详情
+
+以下代码会被 ESLint 提示警告，同时在 Taro（小程序端）也不会有效：
+
+```javascript
+class App extends Component {
+  _render() {
+    return <View />
+  }
+}
+
+class App extends Component {
+  renderHeader(showHeader) {
+    return showHeader && <Header />
+  }
+}
+
+class App extends Component {
+  renderHeader = (showHeader) => {
+    return showHeader& & <Header />
+  }
+}
+```
+
+#### 解决方案
+
+在 `render` 方法中定义。
+
+```javascript
+class App extends Component {
+
+  render () {
+    const { showHeader, showMain } = this.state
+    const header = showHeader && <Header />
+    const main = showMain && <Main />
+    return (
+      <View>
+        {header}
+        {main}
+      </View>
+    )
+  }
+}
+```
+
+当测试用例和线上项目都检测通过时，Taro 将很快（下一个 Minor 版本）支持这一特性。
+
+
+#### 6. 不允许在 JSX 参数(props)中传入 JSX 元素(taro/no-jsx-in-props)
+
+由于微信小程序内置的组件化的系统不能通过属性（props） 传函数，而 props 传递函数可以说 React 体系的根基之一，我们只能自己实现了一套组件化系统。而自制的组件化系统则不能使用内置组件化的 slot 功能。两权相害取其轻，我们暂时只能不支持该功能。
+
+
+#### 规则详情
+
+以下代码会被 ESLint 提示警告，同时在 Taro（小程序端）也不会有效：
+
+```javascript
+<Custom child={<View />} />
+
+<Custom child={() => <View />} />
+
+<Custom child={function () { <View /> }} />
+
+<Custom child={ary.map(a => <View />)} />
+```
+
+#### 解决方案
+
+通过 props 传值在 JSX 模板中预先判定显示内容。
+
+该特性可能会在下一个 Major 版本的 Taro 中得到支持。
+
+
+
+#### 7. 不能在 JSX 参数中使用对象展开符(Object spread)(taro/no-spread-in-props)
+
+微信小程序组件要求每一个传入组件的参数都必须预先设定好，而对象展开符则是动态传入不固定数量的参数。所以 Taro 没有办法支持该功能。
+
+#### 规则详情
+
+以下代码会被 ESLint 提示警告，同时在 Taro（小程序端）也不会有效：
+
+```javascript
+<View {...this.props} />
+
+<View {...props} />
+
+<Custom {...props} />
+```
+
+以下代码不会被警告，也应当在 Taro 任意端中能够运行：
+
+```javascript
+const { id, ...rest } = obj
+
+const [ head, ...tail]  = array
+
+const obj = { id, ...rest }
+```
+
+#### 解决方案
+
+除非微信小程序开放更多能力，目前看不到能支持该特性的可能性。
+
+
+
+#### 8. 不支持无状态组件（stateless component）(taro/no-stateless-component)
+
+由于微信的 `template` 能力有限，不支持动态传值和函数，Taro 暂时只支持一个文件只定义一个组件。为了避免开发者疑惑，暂时不支持定义 stateless component。
+
+#### 规则详情
+
+以下代码会被 ESLint 提示警告，同时在 Taro（小程序端）也不会有效：
+
+```javascript
+function Test () {
+  return <View />
+}
+
+function Test (ary) {
+  return ary.map(() => <View />)
+}
+
+const Test = () => {
+  return <View />
+}
+
+const Test = function () {
+  return <View />
+}
+
+```
+
+以下代码不会被警告，也应当在 Taro 任意端中能够运行：
+
+```javascript
+class App extends Component {
+  render () {
+    return (
+      <View />
+    )
+  }
+}
+```
+
+#### 解决方案
+
+使用 `class` 定义组件。
+
+该特性可能会在下一个 Major 版本的 Taro 中得到支持。
+
+
+
+
+### 组件样式说明
+
+微信小程序的自定义组件样式默认是不能受外部样式影响的，例如在页面中引用了一个自定义组件，在页面样式中直接写自定义组件元素的样式是无法生效的。这一点，在 Taro 中也是一样，而这也是与大家认知的传统 Web 开发不太一样。
+
+
+
+### 组件传递函数属性名以 on 开头
+
+在 Taro 中，父组件要往子组件传递函数，属性名必须以 on 开头
+
+```javascript
+// 调用 Custom 组件，传入 handleEvent 函数，属性名为 onTrigger
+class Parent extends Component {
+
+  handleEvent () {
+
+  }
+
+  render () {
+    return (
+      <Custom onTrigger={this.handleEvent}></Custom>
+    )
+  }
+}
+```
+
+这是因为，微信小程序端组件化是不能直接传递函数类型给子组件的，在 Taro 中是借助组件的事件机制来实现这一特性，而小程序中传入事件的时候属性名写法为 bindmyevent 或者 bind:myevent
+
+所以 Taro 中约定组件传递函数属性名以 on 开头，同时这也和内置组件的事件绑定写法保持一致了。
+
+
+### 小程序端不要在组件中打印传入的函数
+
+前面已经提到小程序端的组件传入函数的原理，所以在小程序端不要在组件中打印传入的函数，因为拿不到结果，但是 this.props.onXxx && this.props.onXxx() 这种判断函数是否传入来进行调用的写法是完全支持的。
+
+### 小程序端不要将在模板中用到的数据设置为 undefined
+
+由于小程序不支持将 data 中任何一项的 value 设为 undefined ，在 setState 的时候也请避免这么用。你可以使用 null 来替代
+
+### 小程序端不要在组件中打印 this.props.children
+
+在微信小程序端是通过 <slot /> 来实现往自定义组件中传入元素的，而 Taro 利用 this.props.children 在编译时实现了这一功能， this.props.children 会直接被编译成 <slot /> 标签，所以它在小程序端属于语法糖的存在，请不要在组件中打印它。
+
+### 支持 props 传入 JSX
+
+支持 props 传入 JSX，但是元素传入 JSX 的属性名必须以 render 开头
+
+例如，子组件写法
+
+```javascript
+
+class Dialog extends Component {
+  render () {
+    return (
+      <View className='dialog'>
+        <View className='header'>
+          {this.props.renderHeader}
+        </View>
+        <View className='body'>
+          {this.props.children}
+        </View>
+        <View className='footer'>
+          {this.props.renderFooter}
+        </View>
+      </View>
+    )
+  }
+}
+```
+
+父组件调用子组件是传入 JSX
+
+```javascript
+class App extends Component {
+  render () {
+    return (
+      <View className='container'>
+        <Dialog
+          renderHeader={
+            <View className='welcome-message'>Welcome!</View>
+          }
+          renderFooter={
+            <Button className='close'>Close</Button>
+          }
+        >
+          <View className="dialog-message">
+            Thank you for using Taro.
+          </View>
+        </Dialog>
+      </View>
+    )
+  }
+}
+```
+
+### 环境变量 process.env 的使用
+
+不要以解构的方式来获取通过 env 配置的 process.env 环境变量，请直接以完整书写的方式 process.env.NODE_ENV 来进行使用
+
+```javascript
+// 错误写法，不支持
+const { NODE_ENV = 'development' } = process.env
+if (NODE_ENV === 'development') {
+  ...
+}
+
+// 正确写法
+if (process.env.NODE_ENV === 'development') {
+
+}
+```
+
+### 使用 this.$componentType 来判断当前 Taro.Component 是页面还是组件
+
+this.$componentType 可能取值分别为 PAGE 和 COMPONENT，开发者可以根据此变量的取值分别采取不同逻辑。
+
+
+### 全局变量
+
+在 Taro 中推荐使用 Redux 来进行全局变量的管理，但是对于一些小型的应用， Redux 就可能显得比较重了，这时候如果想使用全局变量，推荐如下使用。
+
+新增一个自行命名的 JS 文件，例如 global_data.js，示例代码如下
+
+```
+const globalData = {}
+
+export function set (key, val) {
+  globalData[key] = val
+}
+
+export function get (key) {
+  return globalData[key]
+}
+```
+
+随后就可以在任意位置进行使用啦
+
+```
+import { set as setGlobalData, get as getGlobalData } from './path/name/global_data'
+
+setGlobalData('test', 1)
+
+getGlobalData('test')
+```
+
+
+> 不能把 this.props.children 分解为变量再使用
+
+> 不要再setState的时候调用`this.state.num`
+
+#### 配置项
+编译配置存放于项目根目录下 config 目录中，包含三个文件
+
+```javascript
+index.js 是通用配置
+dev.js 是项目预览时的配置
+prod.js 是项目打包时的配置
+```
+
