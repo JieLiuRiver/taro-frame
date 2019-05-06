@@ -35,6 +35,22 @@ export default {
       {
         name: '消息机制',
         url: '/pages/events/index'
+      },
+      {
+        name: '原生页面',
+        url: '/pages/native/index'
+      },
+      {
+        name: 'Taro-Ui',
+        url: '/pages/taroUi/index'
+      },
+      {
+        name: '小程序原生作用域',
+        url: '/pages/scope/index'
+      },
+      {
+        name: '实战',
+        url: '/pages/practice/index'
       }
     ]
   },

@@ -1,9 +1,7 @@
 import Request from '../../utils/request';
 
 export const demo = data => Request({
-  url: '/unauth/product/index',
-  method: 'GET',
+  url: '路径',
+  method: 'POST',
   data,
-}, () => {
-  console.log('hhhhh', this)
 });

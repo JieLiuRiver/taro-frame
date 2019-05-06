@@ -1,0 +1,129 @@
+
+import Taro, {Component} from '@tarojs/taro'
+import {View, Image, Text, Input, ScrollView} from '@tarojs/components'
+import PropTypes from 'prop-types'
+import { connect } from '@tarojs/redux';
+import './index.scss'
+
+const iconPulldown = 'data:image/png;base64,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'
+
+@connect(({practice}) => ({
+  ...practice,
+}))
+export default class TabTypeModal extends Component{
+
+  static propTypes = {
+
+  }
+
+  static defaultProps = {
+  }
+
+  componentWillMount() {
+    this.cacheDynamicTabIdx = this.props.dynamicTabIdx
+    this.cacheTabTypeModalId = this.props.tabTypeModalId
+  }
+
+  onPressLeftItem(o) {
+    let dynamicTabIdx = null
+    if (o.id === this.cacheTabTypeModalId && this.props.tabTypeModalId !== o.id) {
+      console.log('in')
+      dynamicTabIdx = this.cacheDynamicTabIdx
+    }
+    console.log(this.props.dynamicTabIdx, dynamicTabIdx)
+    this.props
+      .dispatch({
+        type: 'practice/save',
+        payload: {
+          tabTypeModalId : o.id,
+          dynamicTabIdx
+        }
+      })
+  }
+
+  onPressRightItem(o, i) {
+    this.props
+      .dispatch({
+        type: 'practice/save',
+        payload: {
+          dynamicTabIdx: i,
+          tabTypeModalVisible: false
+        }
+      })
+    this.props.dispatch({
+      type: 'practice/tabItems',
+      id: this.props.parentTabDatas[this.getCurrentParentIdx()].id
+    })
+    this.cacheDynamicTabIdx = i
+    this.props.onSubmit && this.props.onSubmit()
+  }
+
+  hide() {
+    this.props
+      .dispatch({
+        type: 'practice/save',
+        payload: {
+          dynamicTabIdx: this.cacheDynamicTabIdx,
+          tabTypeModalId: this.cacheTabTypeModalId,
+          tabTypeModalVisible: false
+        }
+      })
+  }
+
+  getCurrentParentIdx() {
+    const {tabTypeModalId, parentTabDatas} = this.props
+    return parentTabDatas.findIndex(o => o.id === tabTypeModalId)
+  }
+
+  render(){
+    const {tabTypeModalVisible, parentTabDatas, tabTypeModalId, dynamicTabIdx} = this.props
+    const currentParentList = (parentTabDatas.filter(o => o.id === tabTypeModalId))
+    const currentParentIdx = this.getCurrentParentIdx()
+    const rightList = currentParentList.length ? currentParentList[0].datas : []
+    return (
+      <View className={`container ${tabTypeModalVisible ? 'show' : 'hide'}`}>
+        <View className={'mask'} onClick={this.hide}></View>
+        <View className={'modal flex-column-start-start'}>
+          <View className={'flex-row-between-center top'}>
+            <Text className={'title'}>请选择分类</Text>
+            <Image src={iconPulldown} className={'icon-arrow-down'} onClick={this.hide}/>
+          </View>
+          <View className={'flex-row-start-start bottom'}>
+            <View class={'b-left'}>
+              <ScrollView scrollY={true} className={'b-left-scroll'}>
+                <View className={'b-list'}>
+                  {
+                    parentTabDatas.map((o, i) => (
+                      <View
+                          key={i}
+                          className={`flex-row-between-center b-l-item ${currentParentIdx === i ? 'active' : ''}`}
+                          onClick={this.onPressLeftItem.bind(this, o)}
+                      >
+                        <Text style={'font-size: 14px;'}>{o.label}</Text>
+                        <Text style={'font-size: 12px'} className={`${currentParentIdx === i ? 'orange' : 'ccc'}`}>150</Text>
+                      </View>
+                    ))
+                  }
+                </View>
+              </ScrollView>
+            </View>
+            <View class={'b-right'}>
+              <ScrollView scrollY={true} className={'b-right-scroll'}>
+                <View className={'b-list'}>
+                  {
+                    rightList.map((o, i) => (
+                      <View key={i} className={`flex-row-between-center b-r-item ${dynamicTabIdx === i ? 'active' : ''}`} onClick={this.onPressRightItem.bind(this, o, i)}>
+                        <Text style={'font-size: 14px;'}>{i == 0 ? '全部' : o.label}</Text>
+                        <Text style={'font-size: 12px;'} className={`${dynamicTabIdx === i ? 'orange' : 'ccc'}`}>150</Text>
+                      </View>
+                    ))
+                  }
+                </View>
+              </ScrollView>
+            </View>
+          </View>
+        </View>
+      </View>
+    )
+  }
+}

@@ -3,7 +3,7 @@ import { View } from '@tarojs/components';
 import { connect } from '@tarojs/redux';
 import './index.scss';
 
-@connect(({route}) => ({
+@connect(({route, common}) => ({
   ...route,
 }))
 export default class Route extends Component {
@@ -12,8 +12,18 @@ export default class Route extends Component {
   };
 
   componentDidMount = () => {
-
+    Taro.eventCenter.on('testEvent', args => {
+      console.log('eventCenter', args)
+      this.props
+        .dispatch({
+          type: 'common/save',
+          payload: {
+            status: args.val
+          }
+        })
+    })
   };
+  
 
   onClick = (way, url) => {
     Taro[way]({
@@ -26,7 +36,7 @@ export default class Route extends Component {
   render() {
     return (
       <View className="route-page flex-column-center">
-        <View className="way-wrap" onClick={this.onClick.bind(this, 'navigateTo', '/pages/todolist/index')}>
+        <View className="way-wrap" onClick={this.onClick.bind(this, 'navigateTo', '/pages/route/index')}>
           <Text className="way-text">NavigateTo</Text>
         </View>
         <View className="way-wrap" onClick={this.onClick.bind(this, 'redirectTo', '/pages/todolist/index')}>

@@ -1,0 +1,4 @@
+.native {
+  color: red;
+  padding: 30rpx;
+}

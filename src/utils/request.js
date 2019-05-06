@@ -1,6 +1,5 @@
 import Taro from '@tarojs/taro';
 import { baseUrl, noConsole, token } from '../config';
-
 const request_data = {
 };
 
@@ -11,7 +10,7 @@ const interceptor = (chain) => {
   return chain.proceed(requestParams)
 }
 
-export default (options = { method: 'GET', data: {}, header: null }) => {
+export default (options = { method: 'GET', data: {}, header: null }, extraWork = () => {}) => {
   if (!noConsole) {
     console.log(
       `${new Date().toLocaleString()}【 M=${options.url} 】P=${JSON.stringify(
@@ -21,7 +20,7 @@ export default (options = { method: 'GET', data: {}, header: null }) => {
   }
   let _header = {
     'Content-Type': 'application/json',
-  }
+  } 
   Taro.getStorageSync(token) && (_header['Authentication'] = Taro.getStorageSync(token))
   !!options.header && (_header = Object.assign(options.header, _header))
 
@@ -39,6 +38,8 @@ export default (options = { method: 'GET', data: {}, header: null }) => {
     method: options.method.toUpperCase(),  // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
   }).then(res => {
     const { statusCode, data } = res;
+    console.log('Taro', Taro.eventCenter)
+    Taro.eventCenter.trigger('testEvent',{val: 10})
     if (statusCode >= 200 && statusCode < 300) {
       if (!noConsole) {
         console.log(
@@ -52,7 +53,7 @@ export default (options = { method: 'GET', data: {}, header: null }) => {
           icon: 'none',
           mask: true,
         });
-      }
+      } 
       return data;
     } else {
       throw new Error(`网络请求错误，状态码${statusCode}`);

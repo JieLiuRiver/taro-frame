@@ -1,0 +1,94 @@
+@import '../../styles/base';
+.container{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  &.show{
+    transform: scale(1);
+  }
+  &.hide{
+    transform: scale(0);
+  }
+  .mask{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,1);
+    z-index: 110;
+    opacity: 0.4;
+  }
+  .orange{
+    color: orange;}
+  .ccc{
+    color: #ccc;}
+  .modal{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 120;
+    width: 100%;
+    background-color: #f2f2f2;
+    box-sizing: border-box;
+    .top{
+      width: 100%;
+      padding: 30px;
+      box-sizing:border-box;
+    }
+    .bottom{
+      width: 100%;
+      min-height: 300px;
+      max-height: 600px;
+      background-color: #fff;
+      overflow: hidden;
+    }
+    .title{
+      font-weight: 700;
+      font-size: 28px;
+    }
+    .icon-arrow-down{
+      width: 25px;
+      height: 25px;
+    }
+    .b-left{
+      flex: 0 0 250px;
+      min-height: 300px;
+      max-height: 600px;
+      box-sizing: border-box;
+      background-color: #f2f2f2;
+      .b-left-scroll{
+        min-height: 300px;
+        max-height: 600px;
+      }
+      .b-l-item{
+        padding: 30px;
+        box-sizing: border-box;
+        &.active{
+          background-color: #fff;
+          color: orange;
+        }
+      }
+    }
+    .b-right{
+      flex: 1;
+      min-height: 300px;
+      max-height: 600px;
+      box-sizing: border-box;
+      background-color: #fff;
+      .b-right-scroll{
+        min-height: 300px;
+        max-height: 600px;
+      }
+      .b-r-item{
+        padding: 30px;
+        box-sizing: border-box;
+        &.active{
+          color: orange;
+        }
+      }
+    }
+  }
+}

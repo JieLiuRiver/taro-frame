@@ -191,6 +191,7 @@
 "@tarojs/taro@1.2.22":
   version "1.2.22"
   resolved "http://registry.npm.taobao.org/@tarojs/taro/download/@tarojs/taro-1.2.22.tgz#0cd28d7ef129863fe02cbeb755e149e4018f57f1"
+  integrity sha1-DNKNfvEphj/gLL63VeFJ5AGPV/E=
 
 "@tarojs/taro@1.2.7":
   version "1.2.7"
@@ -259,6 +260,14 @@
 "@types/react@^16.4.6":
   version "16.8.10"
   resolved "http://registry.npm.taobao.org/@types/react/download/@types/react-16.8.10.tgz?cache=0&other_urls=http%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Freact%2Fdownload%2F%40types%2Freact-16.8.10.tgz#1ccb6fde17f71a62ef055382ec68bdc379d4d8d9"
+  dependencies:
+    "@types/prop-types" "*"
+    csstype "^2.2.0"
+
+"@types/react@^16.7.3":
+  version "16.8.13"
+  resolved "http://registry.npm.taobao.org/@types/react/download/@types/react-16.8.13.tgz#a82b15aad9ab91c40edca0d6889b7745ae24f053"
+  integrity sha1-qCsVqtmrkcQO3KDWiJt3Ra4k8FM=
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -1251,6 +1260,11 @@ binary-extensions@^1.0.0:
   version "1.13.1"
   resolved "http://registry.npm.taobao.org/binary-extensions/download/binary-extensions-1.13.1.tgz#598afe54755b2868a5330d2aff9d4ebb53209b65"
 
+bind-decorator@^1.0.11:
+  version "1.0.11"
+  resolved "http://registry.npm.taobao.org/bind-decorator/download/bind-decorator-1.0.11.tgz#e41bc06a1f65dd9cec476c91c5daf3978488252f"
+  integrity sha1-5BvAah9l3ZzsR2yRxdrzl4SIJS8=
+
 block-stream@*:
   version "0.0.9"
   resolved "http://registry.npm.taobao.org/block-stream/download/block-stream-0.0.9.tgz#13ebfe778a03205cfe03751481ebb4b3300c126a"
@@ -1578,7 +1592,7 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
-classnames@^2.2.5:
+classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "http://registry.npm.taobao.org/classnames/download/classnames-2.2.6.tgz?cache=0&other_urls=http%3A%2F%2Fregistry.npm.taobao.org%2Fclassnames%2Fdownload%2Fclassnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
 
@@ -1996,6 +2010,11 @@ dashdash@^1.12.0:
 date-now@^0.1.4:
   version "0.1.4"
   resolved "http://registry.npm.taobao.org/date-now/download/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
+
+dayjs@^1.7.7:
+  version "1.8.12"
+  resolved "http://registry.npm.taobao.org/dayjs/download/dayjs-1.8.12.tgz#f9610fb9b115aa2fe2a07e742c130df418cee76a"
+  integrity sha1-+WEPubEVqi/ioH50LBMN9BjO52o=
 
 debug@*, debug@^4.1.0, debug@^4.1.1:
   version "4.1.1"
@@ -5983,6 +6002,18 @@ tar@^4:
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
 
+taro-ui@^2.0.2:
+  version "2.0.2"
+  resolved "http://registry.npm.taobao.org/taro-ui/download/taro-ui-2.0.2.tgz#178112e81066a77135d7b0da6d68137cff5ddb5c"
+  integrity sha1-F4ES6BBmp3E117DabWgTfP9d21w=
+  dependencies:
+    "@types/react" "^16.7.3"
+    bind-decorator "^1.0.11"
+    classnames "^2.2.6"
+    dayjs "^1.7.7"
+    lodash "^4.17.10"
+    prop-types "^15.6.2"
+
 terser-webpack-plugin@^1.1.0:
   version "1.2.3"
   resolved "http://registry.npm.taobao.org/terser-webpack-plugin/download/terser-webpack-plugin-1.2.3.tgz#3f98bc902fac3e5d0de730869f50668561262ec8"
@@ -6079,6 +6110,11 @@ tough-cookie@~2.4.3:
   dependencies:
     psl "^1.1.24"
     punycode "^1.4.1"
+
+towxml@^2.1.4:
+  version "2.1.4"
+  resolved "http://registry.npm.taobao.org/towxml/download/towxml-2.1.4.tgz#65b02c338d8af50177f82a29cbc974313643f74b"
+  integrity sha1-ZbAsM42K9QF3+Copy8l0MTZD90s=
 
 trim-newlines@^1.0.0:
   version "1.0.0"

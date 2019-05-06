@@ -4,7 +4,7 @@ import { connect } from '@tarojs/redux';
 import './index.scss';
 
 const eventsInstance = new Events()
-
+ 
 @connect(({events}) => ({
   ...events,
 }))

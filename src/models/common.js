@@ -19,12 +19,14 @@ export default {
     erroMessage: Taro.getStorageSync('user_info')
       ? Taro.getStorageSync('user_info').erroMessage
       : '',
+    status: 0
   },
 
   effects: {},
 
   reducers: {
     save(state, { payload }) {
+      console.log('....... save', payload) 
       return { ...state, ...payload };
     },
   },

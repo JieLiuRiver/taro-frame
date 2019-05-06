@@ -5,8 +5,9 @@ import DemoList from '../../components/DemoList'
 import './index.scss'
 
 
-@connect(({index}) => ({
-  ...index
+@connect(({index, common}) => ({
+  ...index,
+  ...common
 }))
 class Index extends Component {
 
@@ -14,7 +15,9 @@ class Index extends Component {
     navigationBarTitleText: '文档'
   }
 
-  componentWillMount () {}
+  componentWillMount () {
+    
+  }
 
   componentDidMount () {
   }

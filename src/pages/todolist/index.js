@@ -3,7 +3,7 @@ import { View, Input } from '@tarojs/components';
 import { connect } from '@tarojs/redux';
 import TodoList from '../../components/TodoList'
 import './index.scss';
-
+ 
 @connect(({todolist}) => ({
   ...todolist,
 }))

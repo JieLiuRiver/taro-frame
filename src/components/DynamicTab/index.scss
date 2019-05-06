@@ -1,0 +1,50 @@
+@import '../../styles/base';
+.tab-box{
+  position: relative;
+  background-color: #f2f2f2;
+  padding: 10px 0;
+  .scroll-box{
+
+  }
+  .tab-item{
+    margin-right: 60px;
+    &:last-child{
+      margin-right: 0
+    }
+  }
+  .tab-list{
+    padding-left:30px;
+    padding-right:80px;
+  }
+  .tab-list-inner{
+  }
+  .line{
+    width: 40px;
+    height: 4px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    border-radius: 2px;
+  }
+  .orange{
+    color: orange;
+  }
+  .bg-orange{
+    background-color: orange;
+  }
+  .item-label{
+    font-size: 28px;
+  }
+  .pull-down{
+    position: absolute;
+    width: 60px;
+    height: 100%;
+    background-color: #f2f2f2;
+    right: 0;top: 0;
+    z-index: 20;
+  }
+  .icon-pulldown{
+    width: 25px;
+    height: 25px;
+    margin-top:15px;
+  }
+}
